@@ -1,0 +1,33 @@
+{
+  "name": "properties-project",
+  "version": "1.0.0",
+  "description": "Real State project using JavaScript, PHP, MYSQL, and APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Capi02/Real-State-Project.git"
+  },
+  "keywords": [
+    "javascript",
+    "php",
+    "sass"
+  ],
+  "author": "Erick Alejandro Capitanachi González",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Capi02/Real-State-Project/issues"
+  },
+  "homepage": "https://github.com/Capi02/Real-State-Project#readme",
+  "dependencies": {
+    "sass": "^1.58.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.27.12",
+    "gulp": "^4.0.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^5.1.0"
+  }
+}
