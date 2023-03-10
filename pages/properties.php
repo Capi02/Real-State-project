@@ -1,7 +1,11 @@
- <?php include "../pages/includes/head.php" ?> <!-- Head -->
- <?php include "../pages/includes/mobileNavBar.php" ?> <!-- MobileNavBar -->
- <?php include "../pages/includes/navBar.php" ?> <!-- MobileNavBar -->
- <?php include "../pages/includes/config/database.php" ?> <!-- db connection -->
+<?php
+  include "../pages/includes/head.php";
+  include "../pages/includes/mobileNavBar.php";
+  include "../pages/includes/navBar.php";
+  include "../pages/includes/config/database.php"; /* DB connection */
+ 
+?>
+
 
  <div class="hero page-inner overlay" style="background-image: url('../images/hero_bg_1.jpg')">
    <div class="container">

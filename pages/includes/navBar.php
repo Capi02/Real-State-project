@@ -1,8 +1,8 @@
 <?php 
-   if(!isset($_SESSION)){
+   /* if(!isset($_SESSION)){
     session_start();
    }
-   $auth = $_SESSION["login"] ?? false;
+   $auth = $_SESSION["login"] ?? false; */
 ?>
 <nav class="site-nav">
   <div class="container">
@@ -31,9 +31,9 @@
           <li><a href="../pages/about.php">About</a></li>
           <li><a href="../pages/contact.php">Contact Us</a></li>
           <?php
-          if($auth): ?>
+          /* if($auth): ?>
                   <li><a href="../pages/signOut.php">Sign Out</a></li>
-              <?php endif; ?>
+              <?php endif;  */?>
         </ul>
 
         <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">

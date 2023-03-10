@@ -1,7 +1,10 @@
-<?php include "../pages/includes/head.php" ?>
-<?php include "../pages/includes/mobileNavBar.php" ?>
- <?php include "../pages/includes/navBar.php" ?> 
-<?php include "../pages/includes/config/database.php" ?> <!-- db connection -->
+<?php
+  include "../pages/includes/head.php";
+  include "../pages/includes/mobileNavBar.php";
+  include "../pages/includes/navBar.php";
+  include "../pages/includes/config/database.php"; /* DB connection */
+?>
+
 
 <?php 
    if($_SERVER["REQUEST_METHOD"] === "POST"){

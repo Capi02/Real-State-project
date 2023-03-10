@@ -19,9 +19,6 @@ try {
         const strCapitalized = str.charAt(0).toUpperCase() + str.slice(1) //This function helps to capitalize the first letter of a string
         return strCapitalized
       }
-
-      let nf = Intl.NumberFormat()
-
       container.innerHTML += `
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
       <div class="property-item mb-30">

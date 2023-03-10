@@ -1,9 +1,9 @@
-<?php include "../pages/includes/head.php" ?>
-<?php include "../pages/includes/mobileNavBar.php" ?>
-<?php include "../pages/includes/navBar.php" ?>
-<?php include "../pages/includes/config/database.php" ?> <!-- db connection -->
-
 <?php
+include "../pages/includes/head.php";
+include "../pages/includes/mobileNavBar.php";
+include "../pages/includes/navBar.php";
+include "../pages/includes/config/database.php"; /* DB connection */
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -15,48 +15,48 @@ require './PHPMailer/src/SMTP.php';
 
 if (isset($_POST["sent"])) {
 
-  $name = $_POST["name"];
-  $email = $_POST["email"];
-  $subject = $_POST["subject"];
-  $message = $_POST["message"];
+$name = $_POST["name"];
+$email = $_POST["email"];
+$subject = $_POST["subject"];
+$message = $_POST["message"];
 
 
-  //Create an instance; passing `true` enables exceptions
-  $mail = new PHPMailer(true);
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
 
-  try {
-    //Server settings
-    /* $mail->isSMTP(); *//* Debug = SMTP::DEBUG_SERVER;  */                     //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'alejandro.capitanachi.glz@gmail.com';                     //SMTP username
-    $mail->Password   = 'gcyyufxzjhrcjyio';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;   /*  PHPMailer::ENCRYPTION_SMTPS */        //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+try {
+//Server settings
+/* $mail->isSMTP(); *//* Debug = SMTP::DEBUG_SERVER; */ //Enable verbose debug output
+$mail->isSMTP(); //Send using SMTP
+$mail->Host = 'smtp.gmail.com'; //Set the SMTP server to send through
+$mail->SMTPAuth = true; //Enable SMTP authentication
+$mail->Username = 'alejandro.capitanachi.glz@gmail.com'; //SMTP username
+$mail->Password = 'gcyyufxzjhrcjyio'; //SMTP password
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; /* PHPMailer::ENCRYPTION_SMTPS */ //Enable implicit TLS encryption
+$mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-    //Recipients
-    $mail->setFrom('alejandro.capitanachi.glz@gmail.com', 'Capi RealState Email');
-    $mail->addAddress($email, $name);     //Add a recipient
-/*     $mail->addAddress('ellen@example.com');               //Name is optional
-    $mail->addReplyTo('info@example.com', 'Information');
-    $mail->addCC('cc@example.com');
-    $mail->addBCC('bcc@example.com'); */
+//Recipients
+$mail->setFrom('alejandro.capitanachi.glz@gmail.com', 'Capi RealState Email');
+$mail->addAddress($email, $name); //Add a recipient
+/* $mail->addAddress('ellen@example.com'); //Name is optional
+$mail->addReplyTo('info@example.com', 'Information');
+$mail->addCC('cc@example.com');
+$mail->addBCC('bcc@example.com'); */
 
-    //Attachments
-    /*   $mail->addAttachment('/var/tmp/file.tar.gz');  */        //Add attachments
-  
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = $subject;
-    $mail->Body = $message;
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+//Attachments
+/* $mail->addAttachment('/var/tmp/file.tar.gz'); */ //Add attachments
 
-    $mail->send();
-    echo 'Message has been sent';
-  } catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-  }
+//Content
+$mail->isHTML(true); //Set email format to HTML
+$mail->Subject = $subject;
+$mail->Body = $message;
+$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+$mail->send();
+echo 'Message has been sent';
+} catch (Exception $e) {
+echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
 }
 
 ?>

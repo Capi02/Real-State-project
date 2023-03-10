@@ -1,12 +1,58 @@
-<?php include "../pages/includes/head.php" ?>
-<?php include "../pages/includes/mobileNavBar.php" ?>
-<?php include "../pages/includes/navBar.php" ?>
-<?php include "../pages/includes/config/database.php" ?> <!-- db connection -->
-
 <?php
+require_once "../pages/auth.php";
+use PHPMailer\PHPMailer\OAuth;
+
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
+
+include "../pages/includes/head.php";
+include "../pages/includes/mobileNavBar.php";
+/* include "../pages/includes/navBar.php"; */
+include "../pages/includes/config/database.php"; /* DB connection */
+
+require_once "../vendor/autoload.php";
+
+$clientID =  "300621167353-6om0j2k676pjsbvdmt2mn0pdiof90u11.apps.googleusercontent.com";
+$secret = "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";
+
+// Google API Client
+$gclient = new Google_Client();
+
+$gclient->setClientId($clientID);
+$gclient->setClientSecret($secret);
+$gclient->setRedirectUri("http://localhost/Properties-project/pages/index.php");
+
+
+$gclient->addScope('email');
+$gclient->addScope('profile');
+
+if(isset($_GET['code'])){
+    // Get Token
+    $token = $gclient->fetchAccessTokenWithAuthCode($_GET['code']);
+
+    // Check if fetching token did not return any errors
+    if(!isset($token['error'])){
+        // Setting Access token
+        $gclient->setAccessToken($token['access_token']);
+
+        // store access token
+        $_SESSION['access_token'] = $token['access_token'];
+
+        // Get Account Profile using Google Service
+        $gservice = new Google_Service_Oauth2($gclient);
+
+        // Get User Data
+        $udata = $gservice->userinfo->get();
+        foreach($udata as $k => $v){
+            $_SESSION['login_'.$k] = $v;
+        }
+        $_SESSION['ucode'] = $_GET['code'];
+
+        header('location: ./');
+        exit;
+    }
+}
 
 $errors = [];
 
@@ -15,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $username = $_POST["username"];
   $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
   $password = $_POST["password"];
- /*  $confirm_pasword = $_POST["confirm_password"]); */
+  /*  $confirm_pasword = $_POST["confirm_password"]); */
 
   if (!$email) {
     $errors[] = "The email is required, or it is not valid.";
@@ -24,37 +70,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errors[] = "The password is required";
   }
 
-  if(empty($errors)){
+  if (empty($errors)) {
 
     $query = "SELECT * FROM users WHERE email = '$email' "; //creamos el query
     $st = $db->prepare($query); // lo preparamos
     $st->execute();  // lo ejecutamos
-    $rs = $st->fetch(PDO::FETCH_ASSOC); // obtenemos los resultados
+    $rs = $st->fetch(PDO::FETCH_ASSOC); // obtenemos los resultados en un arreglo associativo
 
     echo '<pre>';
     var_dump($rs);
     echo '</pre>';
 
-    if($st->rowCount() > 0){
+    if ($st->rowCount() > 0) {
       $auth = password_verify($password, $rs["password"]); // password ingresado / password base de datos
       var_dump($auth);
 
-      if($auth){
+      if ($auth) {
         // usuario autenticado
-        session_start();
+      /*   session_start(); */
         $_SESSION['username'] = $rs["username"];
         $_SESSION['email'] = $rs["email"];
         $_SESSION['login'] = true;
 
         header('location: index.php');
-
-      }else{
+      } else {
         $errors[] = "The password is incorrect";
       }
-    }else{
+    } else {
       $errors[] = "The user doesn't exist";
     }
-
   }
 }
 
@@ -83,8 +127,6 @@ echo '</pre>';
 </div>
 <!-- </div> -->
 
-
-
 <div class="section">
   <div class="container">
     <div class="row">
@@ -108,12 +150,13 @@ echo '</pre>';
             <div class="col-7 mb-3">
               <input type="password" class="form-control" placeholder="Password" name="password" />
             </div>
-           <!--  <div class="col-7 mb-3">
+            <!--  <div class="col-7 mb-3">
               <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" />
             </div> -->
             <div class="col-7">
               <input style=" width:100%; " type="submit" value="Log In" class="btn btn-primary" />
-            </div>
+              <a href="<?= $gclient->createAuthUrl() ?>">Or Login with Google Account</a>
+            </div>""
           </div>
         </form>
       </div>

@@ -1,7 +1,10 @@
-<?php include "./includes/head.php" ?>
-<?php include "./includes/mobileNavBar.php" ?>
-<?php include "./includes/navBar.php" ?>
-<?php include "./includes/config/database.php"?> <!-- db connection -->
+<?php
+  include "../pages/includes/head.php";
+  include "../pages/includes/mobileNavBar.php";
+  include "../pages/includes/navBar.php";
+  include "../pages/includes/config/database.php"; /* DB connection */
+?>
+
 
     <div
       class="hero page-inner overlay"

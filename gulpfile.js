@@ -6,7 +6,6 @@ const sass = require("gulp-sass")(require("sass"));
 const plumber = require("gulp-plumber"); // plumber sirve para que no se detenga la ejecucion en caso de un error en la sintaxis de sass
 let browserSync = require("browser-sync").create();
 
-
 function serve(){
   browserSync.init({
     proxy: "http://localhost/Properties-project/pages/index.php"
